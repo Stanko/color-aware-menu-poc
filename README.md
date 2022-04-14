@@ -9,6 +9,6 @@ https://muffinman.io/color-aware-menu-poc/
 
 ## html-to-image
 
-I added [html-to-image](https://github.com/bubkoo/html-to-image), which is much lighter, but slower. To try it add `#html-to-image` to the link above and refresh, or open it directly:
+I added [html-to-image](https://github.com/bubkoo/html-to-image), which is much lighter, and got about the same performance. To try it add `#html-to-image` to the link above, or open it directly:
 
 https://muffinman.io/color-aware-menu-poc/#html-to-image

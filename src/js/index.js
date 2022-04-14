@@ -1,8 +1,7 @@
 import html2canvas from 'html2canvas';
-import { toPng } from 'html-to-image';
+import { toCanvas } from 'html-to-image';
 
 const debugImg = document.querySelector('.debug img');
-const usHTMLtoImage = window.location.hash === '#html-to-image';
 
 let ctx;
 let scale = window.devicePixelRatio;
@@ -64,29 +63,18 @@ function checkColor(ctx) {
   }
 }
 
-let snapshot;
-
 function main() {
   const start = new Date().getTime();
+  const usHTMLtoImage = window.location.hash === '#html-to-image';
 
   if (usHTMLtoImage) {
-    toPng(document.body).then(function (dataUrl) {
+    toCanvas(document.body).then(function (canvas) {
       console.log('-- html-to-image --');
       console.log(new Date().getTime() - start, 'ms');
 
-      snapshot = new Image();
-      const canvas = document.createElement('canvas');
-      canvas.width = window.innerWidth * scale;
-      canvas.height = document.body.clientHeight * scale;
       ctx = canvas.getContext('2d');
       x = (window.innerWidth - menuWidth) * scale;
-
-      snapshot.onload = function () {
-        ctx.drawImage(snapshot, 0, 0);
-        checkColor(ctx);
-      };
-
-      snapshot.src = dataUrl;
+      checkColor(ctx);
     });
   } else {
     html2canvas(document.body).then(function (canvas) {
@@ -105,6 +93,10 @@ window.addEventListener('scroll', () => {
   }
 
   checkColor(ctx);
+});
+
+window.addEventListener('hashchange', () => {
+  main();
 });
 
 window.addEventListener('resize', () => {
